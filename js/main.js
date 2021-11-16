@@ -162,7 +162,7 @@ async function init() {
 function startGame() {
   gameStat = 'started';
   let progressBar = createCube({ w: 5, h: 0.1, d: 0 }, 0, 0, 0xff0000);
-  progressBar.position.y = 3.35;
+  progressBar.position.y = 3;
   gsap.to(progressBar.scale, { x: 0, duration: TIME_LIMIT, ease: 'none' });
   doll.start();
   setTimeout(() => {
