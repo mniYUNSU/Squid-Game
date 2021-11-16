@@ -38,6 +38,12 @@ camera.position.z = 5;
 
 const loader = new THREE.GLTFLoader();
 
+// 음악
+const bgMusic = new Audio('./music/bg.mp3');
+bgMusic.loop = true;
+const winMusic = new Audio('./music/win.mp3');
+const loseMusic = new Audio('./music/lose.mp3');
+
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -121,12 +127,16 @@ class Player {
       text.textContent = '당신은 총에 맞았습니다...';
       text.classList = 'text redLight';
       gameStat = 'over';
+      this.stop();
+      loseMusic.play();
       newGame.textContent = '새로고침(F5)으로 재도전할 수 있어요!';
     }
     if (this.playerInfo.positionX < end_position + 0.4) {
       text.textContent = '당신은 생존했습니다!';
       text.classList = 'text greenLight';
       gameStat = 'over';
+      this.stop();
+      winMusic.play();
       newGame.textContent = '새로고침(F5)으로 재도전할 수 있어요!';
     }
   }
@@ -145,7 +155,7 @@ let doll = new Doll();
 async function init() {
   await delay(1000);
   text.textContent = '게임 시작까지 3초';
-  newGame.textContent = '스페이스 바(Space Bar)로 움직일 수 있어요!';
+  newGame.textContent = '왼쪽 화살표 방향키(⬅)로 움직일 수 있어요!';
   await delay(1000);
   text.textContent = '게임 시작까지 2초';
   await delay(1000);
@@ -154,9 +164,11 @@ async function init() {
   text.textContent = '출발!!!';
   text.classList = 'text redLight';
   newGame.textContent = '';
-  await delay(1000);
-
-  startGame();
+  await delay(500);
+  bgMusic.pause();
+  bgMusic.currentTime = 0;
+  bgMusic.play();
+  await startGame();
 }
 
 function startGame() {
@@ -170,12 +182,11 @@ function startGame() {
       text.textContent = '시간 안에 도착하지 못했습니다...';
       text.classList = 'text redLight';
       newGame.textContent = '새로고침(F5)으로 재도전할 수 있어요!';
+      loseMusic.play();
       gameStat = 'over';
     }
   }, TIME_LIMIT * 1000);
 }
-
-init();
 
 function animate() {
   if (gameStat === 'over') return;
@@ -197,13 +208,19 @@ window.addEventListener('keydown', (e) => {
   if (gameStat !== 'started') {
     return;
   }
-  if (e.key === ' ') {
+  if (e.key === 'ArrowLeft') {
     player.run();
   }
 });
 
 window.addEventListener('keyup', (e) => {
-  if (e.key === ' ') {
+  if (e.key === 'ArrowLeft') {
     player.stop();
+  }
+});
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === ' ') {
+    init();
   }
 });
