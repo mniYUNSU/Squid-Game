@@ -1,8 +1,18 @@
 # 무궁화 꽃이 피었습니다~ 🌺
 
-## **Three.js로 오징어게임🦑 만들기**
+## `Three.js`로 **오징어 게임**🦑 만들기
+
+<br>
+<img src="./readmegif.gif">
+<br>
+<br>
 
 `스페이스 바(Space Bar)` 를 움직여 게임을 통과해보세요! 🦑
+
+## [**👧 게임하러 가기**](https://squid-game-mniyunsu.vercel.app/)
+
+<br>
+<br>
 
 ## References
 
